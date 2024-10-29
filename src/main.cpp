@@ -9,8 +9,10 @@ namespace transform_imu
   y_new(0.0),
   z_new(0.0)
   {
-    publish=this->create_publisher<sensor_msgs::msg::Imu>("transform_imu", 10);
-    subscription=this->create_subscription<sensor_msgs::msg::Imu>("/camera/camera/imu", 10, std::bind(&Transform_imu::callback, this, std::placeholders::_1));
+    auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
+    qos.reliability(RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT);
+    publish=this->create_publisher<sensor_msgs::msg::Imu>("transform_imu", qos);
+    subscription=this->create_subscription<sensor_msgs::msg::Imu>("/camera/camera/imu", qos, std::bind(&Transform_imu::callback, this, std::placeholders::_1));
     }
 
     void Transform_imu::callback(const sensor_msgs::msg::Imu::SharedPtr msg)

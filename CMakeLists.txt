@@ -31,7 +31,8 @@ ament_target_dependencies(${PROJECT_NAME}
 # INSTALL
 install(TARGETS 
   ${PROJECT_NAME}
-  DESTINATION lib/${PROJECT_NAME})
+  DESTINATION lib/${PROJECT_NAME},
+  DESTINATION lauch/${PROJECT_NAME})
 
 
 ament_package()
